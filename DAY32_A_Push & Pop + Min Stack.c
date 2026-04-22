@@ -1,21 +1,58 @@
-typedef struct {
-    int stack[1000];
-    int minStack[1000];
-    int top;
-} MinStack;
+#include <stdio.h>
+#define MAX 5
 
-void push(MinStack* obj, int val) {
-    obj->stack[++obj->top] = val;
-    if(obj->top == 0 || val <= obj->minStack[obj->top-1])
-        obj->minStack[obj->top] = val;
-    else
-        obj->minStack[obj->top] = obj->minStack[obj->top-1];
+int stack[MAX];
+int top = -1;
+
+// PUSH
+void push() {
+    int x;
+    if (top == MAX - 1) {
+        printf("Stack Overflow\n");
+    } else {
+        printf("Enter element: ");
+        scanf("%d", &x);
+        stack[++top] = x;
+    }
 }
 
-void pop(MinStack* obj) {
-    obj->top--;
+// POP
+void pop() {
+    if (top == -1) {
+        printf("Stack Underflow\n");
+    } else {
+        printf("Popped element: %d\n", stack[top--]);
+    }
 }
 
-int getMin(MinStack* obj) {
-    return obj->minStack[obj->top];
+// DISPLAY
+void display() {
+    if (top == -1) {
+        printf("Stack is empty\n");
+    } else {
+        printf("Stack elements: ");
+        for (int i = top; i >= 0; i--)
+            printf("%d ", stack[i]);
+        printf("\n");
+    }
+}
+
+int main() {
+    int choice;
+
+    do {
+        printf("\n1.Push  2.Pop  3.Display  4.Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        switch(choice) {
+            case 1: push(); break;
+            case 2: pop(); break;
+            case 3: display(); break;
+            case 4: printf("Exit\n"); break;
+            default: printf("Invalid choice\n");
+        }
+    } while(choice != 4);
+
+    return 0;
 }
